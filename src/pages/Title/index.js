@@ -3,37 +3,26 @@ import { useParams } from "react-router-dom";
 import Tmdb from "../../Tmdb";
 import FeaturedMovie from '../../components/FeaturedMovie'
 
-// import './Home.css';
-
 const Title = () => {
 
   const { id } = useParams();
-  const [watchData, setwatchData] = useState(null);
+  const [watchData, setWatchData] = useState(null);
 
   useEffect(() => {
-    const loadAll = async () => {
+    const fetchWatchData = async () => {
+      const chosenInfo = await Tmdb.getMovieInfo(id, 'tv');
+      setWatchData(chosenInfo);
+    };
 
-      // pegando featured      
-      let chosenInfo = await Tmdb.getMovieInfo(id, 'tv');
-
-      setwatchData(chosenInfo)
-    }
-
-    loadAll()
-  }, [id])
-
+    fetchWatchData();
+  }, [id]);
 
   return (
     <div className="page">
-
-      {watchData &&
-        <FeaturedMovie item={watchData} />
-      }
-
+      {watchData && <FeaturedMovie item={watchData} />}
       <footer>
-        Feito com <span role="img" aria-label="coração">❤</span>  by Adriano Campos
+        Feito com <span role="img" aria-label="coração">❤</span> by Adriano Campos
       </footer>
-
     </div>
   );
 }

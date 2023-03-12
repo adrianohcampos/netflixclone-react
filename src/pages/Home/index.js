@@ -7,42 +7,41 @@ import Helmet from "react-helmet";
 import './Home.css';
 
 const Home = () => {
-
   const [movieList, setMovieList] = useState([]);
-  const [featuredData, setfeaturedData] = useState(null);
-
+  const [featuredData, setFeaturedData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const loadAll = async () => {
-      // pegando lista de filmes
-      let list = await Tmdb.getHomelist();
-      setMovieList(list)
+      setIsLoading(true);
 
-      // pegando featured
-      let originals = list.filter(i => i.slug === 'originals');
-      let randomChosen = Math.floor(Math.random() * (originals[0].items.results.length - 1))
-      let chosen = originals[0].items.results[randomChosen]
-      let chosenInfo = await Tmdb.getMovieInfo(chosen.id, 'tv');
-      setfeaturedData(chosenInfo)
+      try {
+        const list = await Tmdb.getHomelist();
+        setMovieList(list);
+
+        const originals = list.find(i => i.slug === 'originals');
+        const randomChosen = Math.floor(Math.random() * (originals.items.results.length - 1));
+        const chosen = originals.items.results[randomChosen];
+        const chosenInfo = await Tmdb.getMovieInfo(chosen.id, 'tv');
+        setFeaturedData(chosenInfo);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
     }
 
     loadAll()
   }, [])
 
-
-
   return (
     <div className="page">
-
       <Helmet>
         <title>Netflix - Home</title>
         <meta name="description" content="Clone Netflix in React" />
       </Helmet>
 
-
-      {featuredData &&
-        <FeaturedMovie item={featuredData} />
-      }
+      {featuredData && <FeaturedMovie item={featuredData} />}
 
       <section className="lists">
         {movieList.map((item, key) => (
@@ -51,17 +50,14 @@ const Home = () => {
       </section>
 
       <footer>
-        Feito com <span role="img" aria-label="coração">❤</span>  by Adriano Campos
+        Feito com <span role="img" aria-label="coração">❤</span> by Adriano Campos
       </footer>
 
-      {movieList.length <= 0 &&
+      {isLoading && (
         <div className="loading">
           <img src="https://i.gifer.com/origin/36/36527397c208b977fa3ef21f68c0f7b2_w200.gif" alt="loading" />
         </div>
-      }
-
-
-
+      )}
     </div>
   );
 }

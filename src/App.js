@@ -1,28 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
+import Helmet from "react-helmet";
 
 import Header from './components/Header'
 
-import Helmet from "react-helmet";
 const App = () => {
-
-  const [blackHeader, setBlackHeader] = useState(false);
+  const [isHeaderBlack, setIsHeaderBlack] = useState(false);
 
   useEffect(() => {
-    const scrollListener = () => {
+    const handleScroll = () => {
       if (window.scrollY > 10) {
-        setBlackHeader(true);
+        setIsHeaderBlack(true);
       } else {
-        setBlackHeader(false);
+        setIsHeaderBlack(false);
       }
-    }
-    window.addEventListener('scroll', scrollListener);
+    };
+
+    window.addEventListener('scroll', handleScroll);
 
     return () => {
-      window.removeEventListener('scroll', scrollListener)
+      window.removeEventListener('scroll', handleScroll)
     }
-  }, [])
-
+  }, []);
 
   return (
     <div className="App">
@@ -30,10 +29,10 @@ const App = () => {
         <title>Netflix</title>
         <meta name="description" content="Clone Netflix in React" />
       </Helmet>
-      <Header black={blackHeader} />
+      <Header black={isHeaderBlack} />
       <Outlet />
     </div>
   );
-}
+};
 
 export default App;

@@ -1,9 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
-
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
+import App from './App';
 import Watch from './pages/Watch';
 import Home from './pages/Home';
 import Title from './pages/Title';
@@ -30,6 +29,7 @@ const router = createBrowserRouter([
     ]
   }
 ])
+
 ReactDOM.render(
   <React.StrictMode>
     <RouterProvider router={router} />

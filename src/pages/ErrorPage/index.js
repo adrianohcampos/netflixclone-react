@@ -4,7 +4,7 @@ import React from "react";
 const Header = () => {
   return (
 
-    <div >
+    <div>
       <h1>error 404!</h1>
     </div>
 

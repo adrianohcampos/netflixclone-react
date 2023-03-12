@@ -1,55 +1,60 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import './MovieRow.css';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 const MovieRow = ({ title, items }) => {
-    const [scrollX, setScrollX] = useState(-400);
-    const handleLeftArrow = () => {
-        let x = scrollX + Math.round(window.innerWidth / 2);
-        if (x > 0) {
-            x = 0
-        }
-        setScrollX(x)
-    }
-    const handleRightArrow = () => {
-        let x = scrollX - Math.round(window.innerWidth / 2);
-        let listW = items.results.length * 150;
-        if (window.innerWidth - listW > x) {
-            x = (window.innerWidth - listW) - 30
-        }
-        setScrollX(x)
+  const [scrollX, setScrollX] = useState(-400);
+  const windowWidth = window.innerWidth;
 
-    }
+  const handleLeftArrow = () => {
+    const x = scrollX + Math.round(windowWidth / 2);
+    setScrollX(x > 0 ? 0 : x);
+  }
 
-    return (
-        <div className="movieRow" >
-            <h2>{title}</h2>
+  const handleRightArrow = () => {
+    const x = scrollX - Math.round(windowWidth / 2);
+    const listW = items.results.length * 150;
+    setScrollX(windowWidth - listW > x ? (windowWidth - listW) - 30 : x);
+  }
 
-            <div className="movieRow--left" onClick={handleLeftArrow}>
-                <NavigateBeforeIcon style={{ fontSize: 50 }} />
-            </div>
-            <div className="movieRow--right" onClick={handleRightArrow}>
-                <NavigateNextIcon style={{ fontSize: 50 }} />
-            </div>
-            <div className="movieRow--listarea" >
-                <div className="movieRow--list" style={{
-                    marginLeft: scrollX,
-                    width: (items.results.length + 1) * 150
-                }}>
-                    {items.results.length > 0 && items.results.map((item, key) => (
-                        <div key={key} className="movieRow--item">
-                            <Link to={`/watch/${item.id}`}>
-                                <img src={`https://image.tmdb.org/t/p/w300/${item.poster_path}`} key={key} alt={item.original_title} />
-                            </Link>
-                        </div>
-                    ))}
-                </div>
+  const movieItems = useMemo(() => {
+    return items.results.map((item) => (
+      <div key={item.id} className="movieRow--item">
+        <Link to={`/watch/${item.id}`}>
+          <img
+            src={`https://image.tmdb.org/t/p/w300/${item.poster_path}`}
+            alt={item.original_title}
+          />
+        </Link>
+      </div>
+    ));
+  }, [items.results]);
 
-            </div>
+  const listWidth = useMemo(() => {
+    return (items.results.length + 1) * 150;
+  }, [items.results]);
+
+  return (
+    <div className="movieRow">
+      <h2>{title}</h2>
+
+      <div className="movieRow--left" onClick={handleLeftArrow}>
+        <NavigateBeforeIcon style={{ fontSize: 50 }} />
+      </div>
+
+      <div className="movieRow--right" onClick={handleRightArrow}>
+        <NavigateNextIcon style={{ fontSize: 50 }} />
+      </div>
+
+      <div className="movieRow--listarea">
+        <div className="movieRow--list" style={{ marginLeft: scrollX, width: listWidth }}>
+          {movieItems}
         </div>
-    );
-}
+      </div>
+    </div>
+  );
+};
 
 export default MovieRow;
