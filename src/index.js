@@ -7,17 +7,18 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Watch from './pages/Watch';
 import Home from './pages/Home';
 import Title from './pages/Title';
+import ErrorPage from './pages/ErrorPage';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
         element: <Home />
-      },      
+      },
       {
         path: "/watch/:id",
         element: <Watch />
