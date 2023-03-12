@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Netflix Clone",
+  "name": "A Netflix clone I created for the sake of practicing React",
   "icons": [
     {
       "src": "favicon.ico",
