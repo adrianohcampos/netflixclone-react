@@ -15,15 +15,16 @@
     width: inherit;
     height: inherit;
     display: flex;
-    flex-direction: column ;
-    justify-content: center ;
-    padding:70px 30px 150px 30px;
+    flex-direction: column;
+    justify-content: center;
+    padding: 70px 30px 150px 30px;
 }
 
 .featured--name {
     font-size: 4.5vw;
     font-weight: bold;
 }
+
 .featured--info {
     font-size: 1.2vw;
     font-weight: bold;
@@ -31,13 +32,14 @@
 }
 
 .featured--point,
-.featured--year ,
+.featured--year,
 .featured--seasons {
     display: inline-block;
     margin-right: 15px;
 }
-.featured--point {   
-    color: #46d369;    
+
+.featured--point {
+    color: #46d369;
 }
 
 .featured--description {
@@ -74,21 +76,23 @@
     background-color: #fff;
     color: #000;
 }
+
 .featured--titlebutton {
     background-color: #333;
     color: #fff;
 }
 
 
-@media (max-width:760px){
+@media (max-width:760px) {
 
     .featured {
-        height: 90vh;       
+        height: 90vh;
     }
 
     .featured--name {
         font-size: 40px;
     }
+
     .featured--info {
         font-size: 16px;
     }

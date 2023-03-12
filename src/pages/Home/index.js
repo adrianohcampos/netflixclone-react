@@ -10,7 +10,7 @@ const Home = () => {
 
   const [movieList, setMovieList] = useState([]);
   const [featuredData, setfeaturedData] = useState(null);
-  
+
 
   useEffect(() => {
     const loadAll = async () => {
@@ -36,9 +36,9 @@ const Home = () => {
 
       <Helmet>
         <title>Netflix - Home</title>
-        <meta name="description" content="Clone Netflix in React"/>
+        <meta name="description" content="Clone Netflix in React" />
       </Helmet>
-    
+
 
       {featuredData &&
         <FeaturedMovie item={featuredData} />

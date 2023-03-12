@@ -3,11 +3,11 @@ import React from "react";
 
 const Header = () => {
   return (
-    
-      <div >
-        <h1>error 404!</h1>
-      </div>
-     
+
+    <div >
+      <h1>error 404!</h1>
+    </div>
+
   );
 }
 

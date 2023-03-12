@@ -25,14 +25,14 @@ const App = () => {
 
 
   return (
-   <div className="App">
+    <div className="App">
       <Helmet>
         <title>Netflix</title>
-        <meta name="description" content="Clone Netflix in React"/>
+        <meta name="description" content="Clone Netflix in React" />
       </Helmet>
       <Header black={blackHeader} />
-      <Outlet/>
-   </div>
+      <Outlet />
+    </div>
   );
 }
 
