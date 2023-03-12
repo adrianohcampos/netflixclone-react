@@ -1,12 +1,10 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import './Header.css';
 
-const Header = ({ isBlack }) => {
-  const location = useLocation();
-  const { pathname } = location;
-
-  const showHeader = pathname !== '/watch/:id';
+const Header = ({ isBlack }) => { 
+  const { id } = useParams();
+  const showHeader = !id; //pathname !== '/watch/:id';
 
   return (
     <header className={isBlack ? 'black' : ''} style={{ display: showHeader ? 'flex' : 'none' }}>
