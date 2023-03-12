@@ -1,6 +1,10 @@
 {
   "short_name": "Netflix Clone",
-  "name": "A Netflix clone I created for the sake of practicing React",
+  "name": "Netflix Clone React",
+  "version": "1.0",
+  "description": "A Netflix clone I created for the sake of practicing React",
+  "author": "Adriano Campos - acampos.com.br",
+  "default_locale": "pt_BR",
   "icons": [
     {
       "src": "favicon.ico",
