@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import YouTube from 'react-youtube';
+import ReactPlayer from 'react-player';
 import Tmdb from "../../Tmdb";
 import Helmet from "react-helmet";
 
@@ -9,9 +9,9 @@ import './Watch.css';
 const Watch = () => {
 
   const { id } = useParams();
-  const [watchData, setwatchData] = useState(null);
+  const [watchData, setWatchData] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [videoId, setVideoId] = useState('6yzRr3SGuv0');
+  const [videoUrl, setVideoUrl] = useState('https://www.youtube.com/watch?v=6yzRr3SGuv0');
 
   useEffect(() => {
     const loadAll = async () => {
@@ -19,30 +19,15 @@ const Watch = () => {
       const { videos } = chosenInfo;
       const trailer = videos.results.find(i => i.type === 'Trailer') || videos.results[0];
 
-      handleVideoChange(trailer.key);
-      setwatchData(chosenInfo);
+      handleVideoChange(`https://www.youtube.com/watch?v=${trailer.key}`);
+      setWatchData(chosenInfo);
     }
     loadAll();
   }, [id])
 
-  const handleVideoChange = (newVideoId) => {
-    setVideoId(newVideoId);
+  const handleVideoChange = (newVideoUrl) => {
+    setVideoUrl(newVideoUrl);
     setIsPlaying(true);
-  };
-
-  const opts = {
-    height: "100%",
-    width: "100%",
-    playerVars: {
-      autoplay: 1,
-      modestbranding: 1,
-      rel: 0,
-      showinfo: 0,
-      controls: 2,
-      enablejsapi: 1,
-      iv_load_policy: 3,
-      origin: "localhost"
-    },
   };
 
   return (
@@ -56,11 +41,13 @@ const Watch = () => {
       )}
 
       {isPlaying ? (
-        <YouTube
-          videoId={videoId}
+        <ReactPlayer
+          url={videoUrl}
           className="playerYoutube"
-          title={watchData?.name}
-          opts={opts}
+          controls={true}
+          playing={true}
+          width='100vw'
+          height='100vh'
         />
       ) : (
         <div className="loading">
