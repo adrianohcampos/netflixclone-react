@@ -18,12 +18,17 @@ const Watch = () => {
       const chosenInfo = await Tmdb.getMovieInfo(id, 'tv');
       const { videos } = chosenInfo;
       const trailer = videos.results.find(i => i.type === 'Trailer') || videos.results[0];
-
-      handleVideoChange(`https://www.youtube.com/watch?v=${trailer.key}`);
+      
+      if(trailer !== undefined) {
+        handleVideoChange(trailer.site === 'YouTube' ? `https://www.youtube.com/watch?v=${trailer.key}` : `https://vimeo.com/${trailer.key}`)
+      } else {
+        handleVideoChange(videoUrl)
+      };
+      
       setWatchData(chosenInfo);
     }
     loadAll();
-  }, [id])
+  }, [id,videoUrl])
 
   const handleVideoChange = (newVideoUrl) => {
     setVideoUrl(newVideoUrl);
